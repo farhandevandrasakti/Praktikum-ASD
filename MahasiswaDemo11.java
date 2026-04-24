@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class MahasiswaDemo11 {
     public static void main(String[] args) {
-        StackTugasMahasiswa11 stack = new StackTugasMahasiswa11(5);
         Scanner scan = new Scanner(System.in);
+        StackTugasMahasiswa11 stack = new StackTugasMahasiswa11(5);
         int pilih;
 
         do {
@@ -12,8 +12,6 @@ public class MahasiswaDemo11 {
             System.out.println("2. Menilai Tugas");
             System.out.println("3. Melihat Tugas Teratas");
             System.out.println("4. Melihat Daftar Tugas");
-            System.out.println("5. Melihat Tugas Terbawah");
-            System.out.println("6. Jumlah Tugas");
             System.out.print("Pilih: ");
             pilih = scan.nextInt();
             scan.nextLine();
@@ -26,37 +24,35 @@ public class MahasiswaDemo11 {
                     String nim = scan.nextLine();
                     System.out.print("Kelas: ");
                     String kelas = scan.nextLine();
-                    Mahasiswa11 mhs = new Mahasiswa11(nim, nama, kelas);
-                    stack.push(mhs);
-                    System.out.printf("Tugas %s berhasil dikumpulkan\n", mhs.nama);
+                    stack.push(new Mahasiswa11(nim, nama, kelas));
                     break;
+
                 case 2:
                     Mahasiswa11 mhsPop = stack.pop();
                     if (mhsPop != null) {
-                        System.out.println("Tugas " + mhsPop.nama + " berhasil dinilai");
+                        System.out.println("Menilai tugas dari " + mhsPop.nama);
+                        System.out.print("Masukkan nilai (0-100): ");
+                        int nilai = scan.nextInt();
+                        scan.nextLine();
+                        
+                        String biner = stack.konversiDesimalKeBiner(nilai);
+                        System.out.println("Nilai Tugas " + mhsPop.nama + " adalah " + nilai);
+                        System.out.println("Nilai Biner Tugas: " + biner);
                     }
                     break;
+
                 case 3:
-                    Mahasiswa11 mhsPeek = stack.peek();
-                    if (mhsPeek != null) {
-                        System.out.println("Tugas terakhir dikumpulkan oleh " + mhsPeek.nama);
+                    if (!stack.isEmpty()) {
+                        System.out.println("Tugas teratas: " + stack.stack[stack.top].nama);
+                    } else {
+                        System.out.println("Stack kosong!");
                     }
                     break;
+
                 case 4:
                     stack.print();
                     break;
-                case 5:
-                    Mahasiswa11 mhsBawah = stack.lihatTerbawah();
-                    if (mhsBawah != null) {
-                        System.out.println("Tugas pertama dikumpulkan oleh " + mhsBawah.nama);
-                    }
-                    break;
-                case 6:
-                    
-                    int jumlah = stack.jumlahTugas();
-                    System.out.println("Jumlah tugas yang sudah dikumpulkan: " + jumlah);
-                    break;
             }
-        } while (pilih >= 1 && pilih <= 6);
+        } while (pilih >= 1 && pilih <= 4);
     }
 }
